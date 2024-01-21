@@ -1,0 +1,70 @@
+1: install python 3.9.7 
+2: navigate to root path
+3: run cmd '  pip install -r requirements.txt   '
+
+
+------------- make the changes in MONGO_NAME and MONGO_DATABASE_HOST.---------------------------------
+4: set the connection string for mongo db
+        go to settings and set the mongo db enviroment variables.
+
+        # MONGO_USER = ‘’
+        # MONGO_PASS = ‘’
+        MONGO_HOST = ''
+        MONGO_NAME = 'test'
+        MONGO_DATABASE_HOST = 'mongodb://127.0.0.1:27017/'
+        mongoengine.connect(MONGO_NAME, host=MONGO_DATABASE_HOST)
+
+
+        replace the database settings.
+        
+        DATABASES = { 
+            ‘default’: {
+                ‘ENGINE’: ‘djongo’,‘NAME’: ‘chat’, 
+                }
+            }
+
+---------------------------------------------------------------------------
+
+
+
+5: create collection in models.py
+    you can add as much filed required to you. just see the models.py file. 
+    add     objects = models.DjongoManager() to see _id field. other wise django willeturn id=None always
+
+
+6: create views and serializers in timeSeriesData/view.py and timeSeriesData/serializers.py
+
+7: create the url to be accessed in djmongo/urls.py file
+
+----------------------------------------------------------------------------
+
+
+----------- skip this step.. This has no importance with djongo library --------------------  
+8: run these two command to create collection in database.
+
+    python manage.py makemigrations
+    python manage.py migrate
+----------------------------------------------------------------------------------
+
+
+
+7: run the command to run the project
+    python manage.py runserver your_pc_ip : port_number
+    like: python manage.py runserver 192.168.00.0:8000
+
+
+8: Now access the endpoint.
+
+    You have only one endpoint and you can perform CRUDE on this single endpoint:
+
+    get all documents:                  http://localhost:8000/cview/
+    get where source="value"            http://localhost:8000/cview/?source="value"
+
+    delete document with id 1:          http://localhost:8000/cview/1
+
+    update document with id 1           http://localhost:8000/cview/1  (full obejct in body)
+
+    post (create new record)            http://localhost:8000/cview/   (full object in body)
+
+
+
